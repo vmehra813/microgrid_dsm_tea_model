@@ -1,0 +1,866 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1250">
+<meta name=Generator content="Microsoft Word 12 (filtered)">
+<title>Rain flow for MATLAB</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";}
+h1
+	{mso-style-link:"Nagłówek 1 Znak";
+	margin-top:15.0pt;
+	margin-right:0cm;
+	margin-bottom:2.0pt;
+	margin-left:0cm;
+	text-align:left;
+	line-height:115%;
+	font-size:18.0pt;
+	font-family:"Calibri","sans-serif";
+	font-variant:small-caps;
+	letter-spacing:.25pt;
+	font-weight:bold;}
+h2
+	{mso-style-link:"Nagłówek 2 Znak";
+	margin-top:18.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	text-align:left;
+	line-height:115%;
+	border:none;
+	padding:0cm;
+	font-size:16.0pt;
+	font-family:"Calibri","sans-serif";
+	font-variant:small-caps;
+	letter-spacing:.25pt;
+	font-weight:normal;}
+h3
+	{mso-style-link:"Nagłówek 3 Znak";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:left;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";
+	font-variant:small-caps;
+	letter-spacing:.25pt;
+	font-weight:normal;}
+h4
+	{mso-style-link:"Nagłówek 4 Znak";
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	text-align:left;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	font-variant:small-caps;
+	letter-spacing:.5pt;
+	font-weight:normal;}
+h5
+	{mso-style-link:"Nagłówek 5 Znak";
+	margin-top:10.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	text-align:left;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	font-variant:small-caps;
+	color:#943634;
+	letter-spacing:.5pt;
+	font-weight:normal;}
+h6
+	{mso-style-link:"Nagłówek 6 Znak";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:left;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	font-variant:small-caps;
+	color:#C0504D;
+	letter-spacing:.25pt;
+	font-weight:normal;}
+p.MsoHeading7, li.MsoHeading7, div.MsoHeading7
+	{mso-style-link:"Nagłówek 7 Znak";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:left;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";
+	font-variant:small-caps;
+	color:#C0504D;
+	letter-spacing:.5pt;
+	font-weight:bold;}
+p.MsoHeading8, li.MsoHeading8, div.MsoHeading8
+	{mso-style-link:"Nagłówek 8 Znak";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:left;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";
+	font-variant:small-caps;
+	color:#943634;
+	font-weight:bold;
+	font-style:italic;}
+p.MsoHeading9, li.MsoHeading9, div.MsoHeading9
+	{mso-style-link:"Nagłówek 9 Znak";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:left;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";
+	font-variant:small-caps;
+	color:#622423;
+	font-weight:bold;
+	font-style:italic;}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:115%;
+	font-size:8.0pt;
+	font-family:"Calibri","sans-serif";
+	text-transform:uppercase;
+	font-weight:bold;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{mso-style-link:"Tytuł Znak";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	text-align:right;
+	line-height:normal;
+	font-size:24.0pt;
+	font-family:"Calibri","sans-serif";
+	font-variant:small-caps;}
+p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
+	{mso-style-link:"Podtytuł Znak";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:36.0pt;
+	margin-left:0cm;
+	text-align:right;
+	line-height:normal;
+	font-size:12.0pt;
+	font-family:"Cambria","serif";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:blue;
+	text-decoration:underline;}
+strong
+	{color:#C0504D;}
+em
+	{letter-spacing:.5pt;
+	font-weight:bold;}
+p
+	{margin-right:0cm;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";}
+pre
+	{mso-style-link:"HTML - wstępnie sformatowany Znak";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Courier New";}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-link:"Tekst dymka Znak";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:115%;
+	font-size:8.0pt;
+	font-family:"Tahoma","sans-serif";}
+p.MsoNoSpacing, li.MsoNoSpacing, div.MsoNoSpacing
+	{mso-style-link:"Bez odstępów Znak";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	line-height:normal;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:36.0pt;
+	text-align:justify;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoQuote, li.MsoQuote, div.MsoQuote
+	{mso-style-link:"Cytat Znak";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";
+	font-style:italic;}
+p.MsoIntenseQuote, li.MsoIntenseQuote, div.MsoIntenseQuote
+	{mso-style-link:"Cytat intensywny Znak";
+	margin-top:7.0pt;
+	margin-right:72.0pt;
+	margin-bottom:7.0pt;
+	margin-left:72.0pt;
+	text-align:justify;
+	line-height:115%;
+	background:#C0504D;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";
+	color:white;
+	font-weight:bold;
+	font-style:italic;}
+span.MsoSubtleEmphasis
+	{font-style:italic;}
+span.MsoIntenseEmphasis
+	{color:#C0504D;
+	letter-spacing:.5pt;
+	font-weight:bold;
+	font-style:italic;}
+span.MsoSubtleReference
+	{font-weight:bold;}
+span.MsoIntenseReference
+	{font-variant:small-caps;
+	letter-spacing:.25pt;
+	font-weight:bold;
+	text-decoration:underline;}
+span.MsoBookTitle
+	{font-family:"Cambria","serif";
+	font-style:italic;}
+p.MsoTocHeading, li.MsoTocHeading, div.MsoTocHeading
+	{margin-top:15.0pt;
+	margin-right:0cm;
+	margin-bottom:2.0pt;
+	margin-left:0cm;
+	text-align:left;
+	line-height:115%;
+	font-size:16.0pt;
+	font-family:"Calibri","sans-serif";
+	font-variant:small-caps;
+	letter-spacing:.25pt;}
+span.Nagwek1Znak
+	{mso-style-name:"Nagłówek 1 Znak";
+	mso-style-link:"Nagłówek 1";
+	font-family:"Calibri","sans-serif";
+	font-variant:small-caps;
+	letter-spacing:.25pt;
+	font-weight:bold;}
+span.Nagwek2Znak
+	{mso-style-name:"Nagłówek 2 Znak";
+	mso-style-link:"Nagłówek 2";
+	font-family:"Calibri","sans-serif";
+	font-variant:small-caps;
+	letter-spacing:.25pt;}
+span.Nagwek3Znak
+	{mso-style-name:"Nagłówek 3 Znak";
+	mso-style-link:"Nagłówek 3";
+	font-variant:small-caps;
+	letter-spacing:.25pt;}
+span.Nagwek4Znak
+	{mso-style-name:"Nagłówek 4 Znak";
+	mso-style-link:"Nagłówek 4";
+	font-variant:small-caps;
+	letter-spacing:.5pt;}
+span.Nagwek5Znak
+	{mso-style-name:"Nagłówek 5 Znak";
+	mso-style-link:"Nagłówek 5";
+	font-variant:small-caps;
+	color:#943634;
+	letter-spacing:.5pt;}
+span.Nagwek6Znak
+	{mso-style-name:"Nagłówek 6 Znak";
+	mso-style-link:"Nagłówek 6";
+	font-variant:small-caps;
+	color:#C0504D;
+	letter-spacing:.25pt;}
+span.HTML-wstpniesformatowanyZnak
+	{mso-style-name:"HTML - wstępnie sformatowany Znak";
+	mso-style-link:"HTML - wstępnie sformatowany";
+	font-family:Consolas;}
+span.Nagwek7Znak
+	{mso-style-name:"Nagłówek 7 Znak";
+	mso-style-link:"Nagłówek 7";
+	font-variant:small-caps;
+	color:#C0504D;
+	letter-spacing:.5pt;
+	font-weight:bold;}
+span.Nagwek8Znak
+	{mso-style-name:"Nagłówek 8 Znak";
+	mso-style-link:"Nagłówek 8";
+	font-variant:small-caps;
+	color:#943634;
+	font-weight:bold;
+	font-style:italic;}
+span.Nagwek9Znak
+	{mso-style-name:"Nagłówek 9 Znak";
+	mso-style-link:"Nagłówek 9";
+	font-variant:small-caps;
+	color:#622423;
+	font-weight:bold;
+	font-style:italic;}
+span.TytuZnak
+	{mso-style-name:"Tytuł Znak";
+	mso-style-link:Tytuł;
+	font-variant:small-caps;}
+span.PodtytuZnak
+	{mso-style-name:"Podtytuł Znak";
+	mso-style-link:Podtytuł;
+	font-family:"Cambria","serif";}
+span.TekstdymkaZnak
+	{mso-style-name:"Tekst dymka Znak";
+	mso-style-link:"Tekst dymka";
+	font-family:"Tahoma","sans-serif";}
+span.BezodstpwZnak
+	{mso-style-name:"Bez odstępów Znak";
+	mso-style-link:"Bez odstępów";}
+p.msolistparagraphcxspfirst, li.msolistparagraphcxspfirst, div.msolistparagraphcxspfirst
+	{mso-style-name:msolistparagraphcxspfirst;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";}
+p.msolistparagraphcxspmiddle, li.msolistparagraphcxspmiddle, div.msolistparagraphcxspmiddle
+	{mso-style-name:msolistparagraphcxspmiddle;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";}
+p.msolistparagraphcxsplast, li.msolistparagraphcxsplast, div.msolistparagraphcxsplast
+	{mso-style-name:msolistparagraphcxsplast;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:36.0pt;
+	text-align:justify;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";}
+span.CytatZnak
+	{mso-style-name:"Cytat Znak";
+	mso-style-link:Cytat;
+	font-style:italic;}
+span.CytatintensywnyZnak
+	{mso-style-name:"Cytat intensywny Znak";
+	mso-style-link:"Cytat intensywny";
+	color:white;
+	background:#C0504D;
+	font-weight:bold;
+	font-style:italic;}
+p.blue, li.blue, div.blue
+	{mso-style-name:blue;
+	margin-right:0cm;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";
+	color:navy;
+	font-weight:bold;}
+p.msochpdefault, li.msochpdefault, div.msochpdefault
+	{mso-style-name:msochpdefault;
+	margin-right:0cm;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";}
+p.msopapdefault, li.msopapdefault, div.msopapdefault
+	{mso-style-name:msopapdefault;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Calibri","sans-serif";}
+span.html-wstpniesformatowanyznak0
+	{mso-style-name:html-wstpniesformatowanyznak;
+	font-family:"Courier New";}
+.MsoChpDefault
+	{font-size:10.0pt;}
+.MsoPapDefault
+	{margin-bottom:10.0pt;
+	text-align:justify;
+	line-height:115%;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+<meta http-equiv=reply-to content="a.nieslony@po.opole.pl">
+<meta name=Author content="Adam Niesłony">
+<meta name=KeyWords content="rainflow, MATLAB, MEX, cycle counting">
+<meta name=Language content=EN>
+</head>
+
+<body lang=PL link=blue vlink=blue>
+
+<div class=Section1>
+
+<h1><span lang=EN-GB style='font-variant:normal !important;text-transform:uppercase'>Rainflow
+for MATLAB</span></h1>
+
+<p><span lang=EN-GB>Version date: 2010-04-03</span></p>
+
+<div style='border:none;border-bottom:solid windowtext 1.0pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<h2><span lang=EN-GB style='font-variant:normal !important;text-transform:uppercase'>Introduction</span></h2>
+
+</div>
+
+<p><span lang=EN-GB>The rainflow cycle counting algorithm is widely used while
+fatigue life assessment of machine components or structures under non-constant amplitude
+loading. Usually, the algorithm extract cycles from load, stress or strain
+history obtained from measurement or simulation. As a results of the counting
+several cycles and half-cycles with different amplitude and mean value are
+obtained. With the advantage of fatigue damage accumulation hypothesis, like
+Miners rule, the algorithm gives possibility to compute the expected fatigue
+life under random loading conditions. Theoretically, of course ;-)</span></p>
+
+<p><span lang=EN-GB>The small toolbox RAINFLOW includes rainflow cycle counting
+algorithm prepared for using in the MATLAB<sup>®</sup> environment. The main
+function has been translated from Turbo Pascal into C language and compiled to
+the MEX function. The algorithm code has been written according to the ASTM
+standard [1] and optimized considering the calculation speed. Some other
+details about the usability of the function with practical application can be
+found in [2]. The toolbox was tested on PCs under MS Windows<sup>®</sup> XP32
+and Vista64 operating systems, however I guess that they will also works
+properly on other OS.</span></p>
+
+<p><span lang=EN-GB>In order to improve the RAINFLOW toolbox please sends all
+your remarks, suggestions and questions to me through the MATLAB Central
+contact data. All functions in the RAINFLOW toolbox where elaborated by myself.
+At present I am working as assistant professor on the Opole University of
+Technology, Department of Mechanics and Machine Design (<a
+href="http://www.po.opole.pl" target="_blank">Technical University of Opole</a>,
+<a href="http://www.kmpkm.po.opole.pl" target="_blank">Department of Mechanics
+and Machine Design</a>) and I am open for cooperation in the field of fatigue
+live assessment of machine components under multiaxial random loading.</span></p>
+
+<div style='border:none;border-bottom:solid windowtext 1.0pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<h2><span lang=EN-GB style='font-variant:normal !important;text-transform:uppercase'>Terms
+of use</span></h2>
+
+</div>
+
+<p><span lang=EN-GB>The toolbox is copyrighted according to the MATLAB Central
+File Exchange terms. Additionally, I have a following, not mandatory, request
+to the users of my toolbox - if any scientific publication they have been made
+using my software, please refer to the publication [2] of my authorship, where
+the RAINFLOW toolbox have been first officially presented and described.</span></p>
+
+<div style='border:none;border-bottom:solid windowtext 1.0pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<h2><span lang=EN-GB style='font-variant:normal !important;text-transform:uppercase'>Installation</span></h2>
+
+</div>
+
+<p><span lang=EN-GB>The RAINFLOW toolbox is a typical “one directory” MATLAB
+toolbox. Following files there:</span></p>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse'>
+ <tr>
+  <td width=129 valign=top style='width:97.0pt;border-top:solid #4F81BD 1.0pt;
+  border-left:solid #4F81BD 1.0pt;border-bottom:none;border-right:none;
+  background:#4F81BD;padding:0cm 5.4pt 0cm 5.4pt'><pre style='margin-top:6.0pt;
+  margin-right:0cm;margin-bottom:6.0pt;margin-left:0cm;line-height:normal'><b><span
+  lang=EN-GB style='color:white'>File</span></b></pre></td>
+  <td width=24 valign=top style='width:17.9pt;border:none;border-top:solid #4F81BD 1.0pt;
+  background:#4F81BD;padding:0cm 5.4pt 0cm 5.4pt'></td>
+  <td valign=top style='border-top:solid #4F81BD 1.0pt;border-left:none;
+  border-bottom:none;border-right:solid #4F81BD 1.0pt;background:#4F81BD;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:
+  6.0pt;margin-left:0cm;line-height:normal'><b><span lang=EN-GB
+  style='color:white'>Description</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=129 valign=top style='width:97.0pt;border:solid #4F81BD 1.0pt;
+  border-right:none;padding:0cm 5.4pt 0cm 5.4pt'><pre style='margin-top:6.0pt;
+  margin-right:0cm;margin-bottom:6.0pt;margin-left:0cm;line-height:normal'><b><span
+  lang=EN-GB>rainflow.m</span></b></pre></td>
+  <td width=24 valign=top style='width:17.9pt;border-top:solid #4F81BD 1.0pt;
+  border-left:none;border-bottom:solid #4F81BD 1.0pt;border-right:none;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='margin-top:6.0pt;margin-right:0cm;
+  margin-bottom:6.0pt;margin-left:0cm;text-align:center;line-height:normal'><span
+  lang=EN-GB>-</span></p>
+  </td>
+  <td valign=top style='border:solid #4F81BD 1.0pt;border-left:none;padding:
+  0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:
+  6.0pt;margin-left:0cm;line-height:normal'><span lang=EN-GB>short description of
+  the rainflow function, used by MATLAB for build-in help engine, this is not
+  the “working” rainflow function!</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=129 valign=top style='width:97.0pt;border:none;border-left:solid #4F81BD 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'><pre style='margin-top:6.0pt;margin-right:0cm;
+  margin-bottom:6.0pt;margin-left:0cm;line-height:normal'><b><span lang=EN-GB>rainflow.c</span></b></pre></td>
+  <td width=24 valign=top style='width:17.9pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='margin-top:6.0pt;margin-right:0cm;
+  margin-bottom:6.0pt;margin-left:0cm;text-align:center;line-height:normal'><span
+  lang=EN-GB>-</span></p>
+  </td>
+  <td valign=top style='border:none;border-right:solid #4F81BD 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:
+  6.0pt;margin-left:0cm;line-height:normal'><span lang=EN-GB>C MEX code of the
+  rainflow function</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=129 valign=top style='width:97.0pt;border:solid #4F81BD 1.0pt;
+  border-right:none;padding:0cm 5.4pt 0cm 5.4pt'><pre style='margin-top:6.0pt;
+  margin-right:0cm;margin-bottom:6.0pt;margin-left:0cm;line-height:normal'><b><span
+  lang=EN-GB>rainflow.mexw32</span></b></pre></td>
+  <td width=24 valign=top style='width:17.9pt;border-top:solid #4F81BD 1.0pt;
+  border-left:none;border-bottom:solid #4F81BD 1.0pt;border-right:none;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='margin-top:6.0pt;margin-right:0cm;
+  margin-bottom:6.0pt;margin-left:0cm;text-align:center;line-height:normal'><span
+  lang=EN-GB>-</span></p>
+  </td>
+  <td valign=top style='border:solid #4F81BD 1.0pt;border-left:none;padding:
+  0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:
+  6.0pt;margin-left:0cm;line-height:normal'><span lang=EN-GB>compiled
+  &quot;rainflow.c&quot; file (MATLAB R2007a, Windows XP Prof. 32Bit)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=129 valign=top style='width:97.0pt;border:none;border-left:solid #4F81BD 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'><pre style='margin-top:6.0pt;margin-right:0cm;
+  margin-bottom:6.0pt;margin-left:0cm;line-height:normal'><b><span lang=EN-GB>rainflow.mexw64</span></b></pre></td>
+  <td width=24 valign=top style='width:17.9pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='margin-top:6.0pt;margin-right:0cm;
+  margin-bottom:6.0pt;margin-left:0cm;text-align:center;line-height:normal'><span
+  lang=EN-GB>-</span></p>
+  </td>
+  <td valign=top style='border:none;border-right:solid #4F81BD 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:
+  6.0pt;margin-left:0cm;line-height:normal'><span lang=EN-GB>compiled
+  &quot;rainflow.c&quot; file (MATLAB R2007a, Windows Vista 64Bit)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=129 valign=top style='width:97.0pt;border:solid #4F81BD 1.0pt;
+  border-right:none;padding:0cm 5.4pt 0cm 5.4pt'><pre style='margin-top:6.0pt;
+  margin-right:0cm;margin-bottom:6.0pt;margin-left:0cm;line-height:normal'><b><span
+  lang=EN-GB>rfhist.m</span></b></pre></td>
+  <td width=24 valign=top style='width:17.9pt;border-top:solid #4F81BD 1.0pt;
+  border-left:none;border-bottom:solid #4F81BD 1.0pt;border-right:none;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='margin-top:6.0pt;margin-right:0cm;
+  margin-bottom:6.0pt;margin-left:0cm;text-align:center;line-height:normal'><span
+  lang=EN-GB>-</span></p>
+  </td>
+  <td valign=top style='border:solid #4F81BD 1.0pt;border-left:none;padding:
+  0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:
+  6.0pt;margin-left:0cm;line-height:normal'><span lang=EN-GB>histograms of
+  rainflow data</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=129 valign=top style='width:97.0pt;border:none;border-left:solid #4F81BD 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'><pre style='margin-top:6.0pt;margin-right:0cm;
+  margin-bottom:6.0pt;margin-left:0cm;line-height:normal'><b><span lang=EN-GB>rfmatrix.m</span></b></pre></td>
+  <td width=24 valign=top style='width:17.9pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='margin-top:6.0pt;margin-right:0cm;
+  margin-bottom:6.0pt;margin-left:0cm;text-align:center;line-height:normal'><span
+  lang=EN-GB>-</span></p>
+  </td>
+  <td valign=top style='border:none;border-right:solid #4F81BD 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:
+  6.0pt;margin-left:0cm;line-height:normal'><span lang=EN-GB>rainflow matrix
+  calculation and visualization</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=129 valign=top style='width:97.0pt;border:solid #4F81BD 1.0pt;
+  border-right:none;padding:0cm 5.4pt 0cm 5.4pt'><pre style='margin-top:6.0pt;
+  margin-right:0cm;margin-bottom:6.0pt;margin-left:0cm;line-height:normal'><b><span
+  lang=EN-GB>rfdemo1.m</span></b></pre></td>
+  <td width=24 valign=top style='width:17.9pt;border-top:solid #4F81BD 1.0pt;
+  border-left:none;border-bottom:solid #4F81BD 1.0pt;border-right:none;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='margin-top:6.0pt;margin-right:0cm;
+  margin-bottom:6.0pt;margin-left:0cm;text-align:center;line-height:normal'><span
+  lang=EN-GB>-</span></p>
+  </td>
+  <td valign=top style='border:solid #4F81BD 1.0pt;border-left:none;padding:
+  0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:
+  6.0pt;margin-left:0cm;line-height:normal'><span lang=EN-GB>demo for cycle
+  counting, recommended for short signals</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=129 valign=top style='width:97.0pt;border:none;border-left:solid #4F81BD 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'><pre style='margin-top:6.0pt;margin-right:0cm;
+  margin-bottom:6.0pt;margin-left:0cm;line-height:normal'><b><span lang=EN-GB>rfdemo2.m</span></b></pre></td>
+  <td width=24 valign=top style='width:17.9pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='margin-top:6.0pt;margin-right:0cm;
+  margin-bottom:6.0pt;margin-left:0cm;text-align:center;line-height:normal'><span
+  lang=EN-GB>-</span></p>
+  </td>
+  <td valign=top style='border:none;border-right:solid #4F81BD 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:
+  6.0pt;margin-left:0cm;line-height:normal'><span lang=EN-GB>demo for rainflow
+  matrix and histograms, recommended for long signals</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=129 valign=top style='width:97.0pt;border:solid #4F81BD 1.0pt;
+  border-right:none;padding:0cm 5.4pt 0cm 5.4pt'><pre style='margin-top:6.0pt;
+  margin-right:0cm;margin-bottom:6.0pt;margin-left:0cm;line-height:normal'><b><span
+  lang=EN-GB>sig2ext.m</span></b></pre></td>
+  <td width=24 valign=top style='width:17.9pt;border-top:solid #4F81BD 1.0pt;
+  border-left:none;border-bottom:solid #4F81BD 1.0pt;border-right:none;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='margin-top:6.0pt;margin-right:0cm;
+  margin-bottom:6.0pt;margin-left:0cm;text-align:center;line-height:normal'><span
+  lang=EN-GB>-</span></p>
+  </td>
+  <td valign=top style='border:solid #4F81BD 1.0pt;border-left:none;padding:
+  0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:
+  6.0pt;margin-left:0cm;line-height:normal'><span lang=EN-GB>auxiliary function
+  for rfdemo, it searches turning points from signals</span></p>
+  </td>
+ </tr>
+</table>
+
+<p><span lang=EN-GB>In order to install the rainflow function, you must realise
+standard tasks, necessary during addition of new toolboxes to the MATLAB
+environment, i.e.:</span></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal><span lang=EN-GB>Download the archive file <a
+     href="http://www.mathworks.com/matlabcentral/fileexchange/3026">rainflow.zip</a>
+     from File Exchange web side.</span></li>
+ <li class=MsoNormal><span lang=EN-GB>Create a new local directory for files of
+     the RAINFLOW toolbox.</span></li>
+ <li class=MsoNormal><span lang=EN-GB>Unpack all files from the archive to that
+     directory.</span></li>
+ <li class=MsoNormal><span lang=EN-GB>Add a path to that directory in MATLAB,
+     using the command &quot;Edit Path&quot; from main menu.</span></li>
+</ol>
+
+<p><span lang=EN-GB>Additionally, if the compiled rainflow MEX file (</span><span
+class=html-wstpniesformatowanyznak0><span lang=EN-GB>rainflow.mexw32</span></span><span
+lang=EN-GB> for 32Bit MS Windows and </span><span
+class=html-wstpniesformatowanyznak0><span lang=EN-GB>rainflow.mexw64</span></span><span
+lang=EN-GB> for 64Bit MS Windows) is out of date, or you are user of OS unlike
+MS Windows, you need to recompile it. Use the </span><span
+class=html-wstpniesformatowanyznak0><span lang=EN-GB>rainflow.c</span></span><span
+lang=EN-GB> file with source code for this task. Please, look into the MATLAB
+help and search the topic “mex” for more details.</span></p>
+
+<div style='border:none;border-bottom:solid windowtext 1.0pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<h2><span lang=EN-GB style='font-variant:normal !important;text-transform:uppercase'>Quick
+start</span></h2>
+
+</div>
+
+<h3><span lang=EN-GB style='font-variant:normal !important;text-transform:uppercase'>Lesson
+1 – using the demo files</span></h3>
+
+<p><span lang=EN-GB>There are two demo files:</span></p>
+
+<p style='margin-left:36.0pt;text-indent:-18.0pt'><span lang=EN-GB>1.</span><span
+lang=EN-GB style='font-size:7.0pt;line-height:115%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span lang=EN-GB>rfdemo1 – show how the algorithm are working plotting
+the extracted cycles and half-cycles on the time history, recommended for short
+time signals,</span></p>
+
+<p style='margin-left:36.0pt;text-indent:-18.0pt'><span lang=EN-GB>2.</span><span
+lang=EN-GB style='font-size:7.0pt;line-height:115%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span lang=EN-GB>rfdemo2 – make rainflow histograms and rainflow matrix,
+recommended for long time signals.</span></p>
+
+<p><span lang=EN-GB>To run this demos type on the MATLAB command window
+following commands:</span></p>
+
+<pre><b><span lang=EN-GB style='color:navy'>rfdemo1</span></b></pre>
+
+<p><span lang=EN-GB>or</span></p>
+
+<pre><b><span lang=EN-GB style='color:navy'>rfdemo2</span></b></pre>
+
+<h3><span lang=EN-GB style='font-variant:normal !important;text-transform:uppercase'>Lesson
+2 – rainflow counting on user data</span></h3>
+
+<p><span lang=EN-GB>This example show how to perform rainflow counting on self
+generated signal (or self loaded to the MATLAB Command Window):</span></p>
+
+<pre style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>clear all</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>lengths=10000;</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>s=10*randn(lengths,1)+rand(lengths,1);</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>% or load the signal from file --&gt; s=my_signal;</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>tp=sig2ext(s);</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>% use the sig2ext function ever before you run rainflow,</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>% because the counting procedure works properly only on</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>% turning points</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>rf=rainflow(tp);</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>rfm=rfmatrix(rf,20,20);</span></b></pre><pre><b><span
+lang=EN-GB style='color:navy'>surf(rfm)</span></b></pre>
+
+<h3><span lang=EN-GB style='font-variant:normal !important;text-transform:uppercase'>Lesson
+3 – fatigue life calculation</span></h3>
+
+<p><span lang=EN-GB>The script presented bellow realize fatigue calculation in
+the case of uniaxial random loading without any additional influence of notch,
+stress gradient, environment etc. In this example linear hypothesis of damage
+accumulation is used (full range Miner rule without omission of the cycles with
+amplitudes lover then endurance limit) combined with typical S-N curve (Wöhler
+curve).</span></p>
+
+<pre style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>clear all</span></b></pre><pre
+style='margin-bottom:3.0pt'><span lang=EN-US> </span></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>% S-N curve parameters:</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>sigaf=250;&nbsp; &nbsp;% endurance limit</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>m=8;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;% slope of the curve</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>Nk=2e6;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;% number of cycle for knee point</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-US style='color:navy'> </span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>% random stress time history generated from random generator</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>% can be replaced by another signal: sigt=my_stress;</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>sigt=100*randn(1000,1);</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-US style='color:navy'> </span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>% length in second of the time history</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>To=500;</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-US style='color:navy'> </span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>tp=sig2ext(sigt);&nbsp;&nbsp; &nbsp;% turning points</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>rf=rainflow(tp);&nbsp;&nbsp;&nbsp; &nbsp;% rainflow</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>CycleRate=rf(3,:);&nbsp; &nbsp;% number of cycles</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>siga=rf(1,:);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;% cycle amplitudes</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-US style='color:navy'> </span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>% calculation of the damage</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>damage=sum((CycleRate/Nk).*((siga/sigaf).^m));</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-US style='color:navy'> </span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>% expected time to failure in seconds</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>T=To/damage;</span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-US style='color:navy'> </span></b></pre><pre
+style='margin-bottom:3.0pt'><b><span lang=EN-GB style='color:navy'>% expected time to failure in days</span></b></pre><pre><b><span
+lang=EN-GB style='color:navy'>disp(['Calculated fatigue life in days: ' num2str(T/3600/24)])</span></b></pre>
+
+<p><span lang=EN-GB>Hint: copy and paste the text in blue into the Script
+Editor and press the “run button” ;-)</span></p>
+
+<div style='border:none;border-bottom:solid windowtext 1.0pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<h2><span lang=EN-GB style='font-variant:normal !important;text-transform:uppercase'>References</span></h2>
+
+</div>
+
+<table class=MsoNormalTable border=0 cellpadding=0>
+ <tr>
+  <td width=25 valign=top style='width:19.05pt;padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span lang=EN-GB>[1]</span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span lang=EN-GB>ASTM E 1049-85 (Reapproved 1997), <i>Standard
+  practices for cycle counting in fatigue analysis,</i> in: Annual Book of ASTM
+  Standards, Vol. 03.01, Philadelphia 1999, pp. 710-718 </span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=25 valign=top style='width:19.05pt;padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span lang=EN-GB>[2]</span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><span lang=EN-GB>NIESŁONY A., <i>Determination of
+  fragments of multiaxial service loading strongly influencing the fatigue of
+  machine components</i>, Mechanical Systems and Signal Processing, Vol. 23(8),
+  2009, pp. 2712-2721</span></p>
+  </td>
+ </tr>
+</table>
+
+<p align=center style='text-align:center'><span lang=EN-GB style='font-size:
+8.0pt;line-height:115%'>End of page<br>
+© by Adam Niesłony</span></p>
+
+</div>
+
+</body>
+
+</html>
